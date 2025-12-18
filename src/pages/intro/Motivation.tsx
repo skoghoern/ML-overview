@@ -8,7 +8,6 @@ import {
   Lightbulb,
   Fish,
   Layers,
-  CheckCircle2,
   Brain,
   Hammer,
   Search,

@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, BookOpen, Map, Compass, Anchor } from "lucide-react";
+import { ArrowRight, Map, Compass, Anchor } from "lucide-react";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -11,7 +11,7 @@ const fadeInUp = {
 
 const Landing: React.FC = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] text-center max-w-4xl mx-auto px-6">
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-6rem)] md:min-h-[calc(100vh-10rem)] pt-16 md:pt-32 text-center max-w-4xl mx-auto px-6">
       {/* --- HERO --- */}
       <motion.div
         initial="hidden"
@@ -19,11 +19,6 @@ const Landing: React.FC = () => {
         variants={fadeInUp}
         className="space-y-8 mb-16"
       >
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-ocean-50 text-ocean-900 text-xs font-bold tracking-widest uppercase border border-ocean-100">
-          <span className="w-2 h-2 rounded-full bg-ocean-500 animate-pulse" />
-          Interactive Digital Textbook
-        </div>
-
         <h1 className="text-5xl md:text-7xl font-serif font-bold text-ocean-900 tracking-tight leading-tight">
           Ocean of
           <br />
@@ -33,9 +28,8 @@ const Landing: React.FC = () => {
         </h1>
 
         <p className="text-xl text-slate-600 font-serif max-w-2xl mx-auto leading-relaxed">
-          A structured overview of Machine Learning. <br />
-          Synthesizing Neuroscience, Statistics, and Deep Learning into a single
-          unified framework.
+          Machine Learning, Unified. An interactive guide to the intersection of
+          Neuroscience, Statistics, and Deep Learning.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">

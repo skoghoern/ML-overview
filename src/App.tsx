@@ -1,4 +1,3 @@
-import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -13,6 +12,9 @@ import Motivation from "./pages/intro/Motivation";
 import Approach from "./pages/intro/Approach";
 import Framework from "./pages/intro/Framework";
 import Level1 from "./pages/levels/Level1";
+import Level2 from "./pages/levels/Level2";
+import InferenceLanding from "./pages/levels/inference/InferenceLanding";
+import ApproximateMethods from "./pages/levels/inference/ApproximateMethods";
 
 function App() {
   return (
@@ -29,7 +31,12 @@ function App() {
 
           {/* Levels */}
           <Route path="/level-1" element={<Level1 />} />
-
+          <Route path="/level-2" element={<Level2 />} />
+          <Route path="/level-2/inference" element={<InferenceLanding />} />
+          <Route
+            path="/level-2/inference/approximate"
+            element={<ApproximateMethods />}
+          />
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

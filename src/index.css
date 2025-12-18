@@ -37,3 +37,31 @@ h6 {
   font-family: var(--font-serif);
   color: var(--color-ocean-900);
 }
+@layer utilities {
+  .scrollbar-subtle {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+  }
+
+  .scrollbar-subtle::-webkit-scrollbar {
+    width: 4px; /* Very thin */
+  }
+
+  .scrollbar-subtle::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-subtle::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 20px;
+  }
+
+  /* Only show the thumb when hovering the container or the thumb itself */
+  .scrollbar-subtle:hover::-webkit-scrollbar-thumb {
+    background-color: #e2e8f0; /* slate-200 */
+  }
+
+  .scrollbar-subtle::-webkit-scrollbar-thumb:hover {
+    background-color: #cbd5e1; /* slate-300 */
+  }
+}

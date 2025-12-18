@@ -1,7 +1,7 @@
 // src/pages/levels/Level1.tsx
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { InlineMath, BlockMath } from "react-katex";
+import { BlockMath } from "react-katex";
 import {
   ArrowRight,
   ArrowLeft,
@@ -10,7 +10,6 @@ import {
   Scale,
   Users,
   Brain,
-  TrendingUp,
   AlertTriangle,
   CheckCircle2,
   Sigma,

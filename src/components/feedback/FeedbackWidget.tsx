@@ -13,7 +13,6 @@ import {
   HelpCircle,
   Lightbulb,
   Bug,
-  ThumbsUp,
 } from "lucide-react";
 import { cn } from "../../lib/utils";
 
