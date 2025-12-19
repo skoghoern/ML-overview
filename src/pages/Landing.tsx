@@ -20,16 +20,16 @@ const Landing: React.FC = () => {
         className="space-y-8 mb-16"
       >
         <h1 className="text-5xl md:text-7xl font-serif font-bold text-ocean-900 tracking-tight leading-tight">
-          Ocean of
+          Machine Learning,
           <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-br from-ocean-600 to-ocean-900">
-            Intelligence
+            Overview
           </span>
         </h1>
 
         <p className="text-xl text-slate-600 font-serif max-w-2xl mx-auto leading-relaxed">
-          Machine Learning, Unified. An interactive guide to the intersection of
-          Neuroscience, Statistics, and Deep Learning.
+          An interactive guide to the intersection of Neuroscience, Statistics,
+          and Deep Learning.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">

@@ -9,7 +9,7 @@ import {
   Compass,
   Layers,
   Lightbulb,
-  Menu, // This was imported but unused; now used for the toggle
+  Menu,
   X,
   PanelLeftClose,
   PanelLeftOpen,
@@ -341,9 +341,19 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             isDesktopSidebarOpen ? "md:w-64" : "md:w-0 md:border-none"
           )}
         >
-          <div className="w-64 h-full flex flex-col p-6">
+          {/* UPDATED: w-full (was w-64) to fix right gap, relative for button positioning */}
+          <div className="w-full h-full flex flex-col p-6 relative">
+            {/* UPDATED: Improved Close Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="md:hidden absolute top-4 right-4 p-2 text-slate-400 hover:text-ocean-900 hover:bg-slate-100 rounded-full transition-all z-10"
+              aria-label="Close Menu"
+            >
+              <X size={24} />
+            </button>
+
             {/* Sidebar Header */}
-            <div className="mb-8 pl-2 relative">
+            <div className="mb-8 pl-2">
               <Link to="/">
                 <h1 className="text-2xl font-serif font-bold tracking-tight text-ocean-900 leading-none hover:opacity-80 transition-opacity">
                   ML, Unified
@@ -352,14 +362,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <p className="text-[10px] font-sans text-slate-400 mt-2 uppercase tracking-widest">
                 The ML Map
               </p>
-
-              {/* Close Button (Mobile Only) */}
-              <button
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="md:hidden p-1 text-slate-400 hover:text-slate-600 transition-colors absolute top-0 right-0"
-              >
-                <X size={20} />
-              </button>
             </div>
 
             {/* Navigation Links */}

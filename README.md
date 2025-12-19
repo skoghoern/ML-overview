@@ -7,5 +7,5 @@ git add .
 git commit -m "message content"
 git push
 
-then deploy it to githubpages with:
+then deploy it to githubpages with (using the script defined in package.json):
 npm run deploy
