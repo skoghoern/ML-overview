@@ -20,7 +20,7 @@ const Landing: React.FC = () => {
         className="space-y-8 mb-16"
       >
         <h1 className="text-5xl md:text-7xl font-serif font-bold text-ocean-900 tracking-tight leading-tight">
-          Machine Learning,
+          Machine Learning
           <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-br from-ocean-600 to-ocean-900">
             Overview

@@ -54,7 +54,7 @@ const Approach: React.FC = () => {
             cannot simply list algorithms in isolation. We need a map.
           </p>
           <p className="text-base text-slate-500">
-            This post provides a structured, high-level overview of the current
+            This page provides a structured, high-level overview of the current
             Machine Learning landscape. While we will ground our comparison in
             mathematics and physics, our primary focus remains conceptual.
           </p>
@@ -87,7 +87,7 @@ const Approach: React.FC = () => {
 
             <div className="space-y-4">
               <h3 className="text-xl font-bold text-rose-900">
-                What this post is NOT
+                What this page is NOT
               </h3>
               <p className="text-slate-600 leading-relaxed">
                 To manage expectations: this is not a deep-dive tutorial into
@@ -127,7 +127,7 @@ const Approach: React.FC = () => {
 
               <div className="space-y-4">
                 <h3 className="text-xl font-bold text-emerald-900">
-                  What this post IS
+                  What this page IS
                 </h3>
                 <p className="text-slate-700 leading-relaxed">
                   We focus on <strong>connections and contrasts</strong>. Just

@@ -386,7 +386,7 @@ const Motivation: React.FC = () => {
 
         <div className="space-y-6">
           <p className="text-lg text-slate-700 leading-relaxed">
-            This post aims to provide that bird's-eye view. By stepping back and
+            This page aims to provide that bird's-eye view. By stepping back and
             creating a structured overview of ML, we are moving up Bloom's
             pyramid. Whether you are an expert in the field or a complete
             newcomer, the goal is to make the "water" visible again.

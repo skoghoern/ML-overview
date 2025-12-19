@@ -184,7 +184,7 @@ const FloatingNavBar = () => {
           <Map size={16} />
         </div>
         <span className="font-serif font-bold text-ocean-900 text-sm hidden sm:block whitespace-nowrap tracking-tight">
-          Machine Learning, Unified
+          ML Overview
         </span>
       </Link>
 
@@ -296,7 +296,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <Map size={16} />
               </div>
               <span className="font-serif font-bold text-ocean-900 text-sm whitespace-nowrap tracking-tight">
-                ML, Unified
+                ML Overview
               </span>
             </Link>
 
@@ -356,7 +356,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div className="mb-8 pl-2">
               <Link to="/">
                 <h1 className="text-2xl font-serif font-bold tracking-tight text-ocean-900 leading-none hover:opacity-80 transition-opacity">
-                  ML, Unified
+                  ML Overview
                 </h1>
               </Link>
               <p className="text-[10px] font-sans text-slate-400 mt-2 uppercase tracking-widest">
