@@ -1,53 +1,27 @@
 // src/pages/intro/Framework.tsx
 import React from "react";
 import { motion } from "framer-motion";
-import {
-  ArrowRight,
-  Layers,
-  Box,
-  Cpu,
-  GitBranch,
-  Eye,
-  Brain,
-  Quote,
-} from "lucide-react";
-import { Link } from "react-router-dom";
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
+import { Layers, Box, Cpu, GitBranch, Eye, Brain, Quote } from "lucide-react";
+import { LessonNav } from "../../components/lesson/LessonNav";
+import { PageHeader } from "../../components/lesson/PageHeader";
 
 const Framework: React.FC = () => {
   return (
     <div className="max-w-3xl mx-auto pb-32">
-      {/* --- HERO HEADER --- */}
-      <motion.header
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        className="space-y-8 mb-16"
-      >
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-ocean-50 text-ocean-800 text-xs font-bold tracking-widest uppercase border border-ocean-100">
-          <Layers size={14} />
-          <span>Part III: Structure</span>
-        </div>
-        <h1 className="text-4xl md:text-5xl font-serif text-ocean-900 leading-tight">
-          Structuring the Chaos
-        </h1>
-        <p className="text-lg md:text-xl text-slate-600 leading-relaxed font-serif">
+      <PageHeader title="Structuring the Chaos">
+        <p className="font-serif">
           How do we organize a chaotic ocean of algorithms into a coherent map?
           Fortunately, we don't need to invent this map from scratch. We can
           stand on the shoulders of giants who have already thought deeply about
           how to define complex information processing systems.
         </p>
-        <p className="text-lg md:text-xl text-slate-600 leading-relaxed font-serif">
+        <p className="font-serif">
           To structure this overview, we will synthesize three distinct but
           compatible perspectives: the neuroscientific hierarchy of David Marr,
           the pattern recognition formalism of Christopher Bishop, and the deep
           learning architecture of Yann LeCun.
         </p>
-      </motion.header>
+      </PageHeader>
 
       {/* --- THE GIANTS --- */}
       <section className="mb-20">
@@ -314,37 +288,7 @@ const Framework: React.FC = () => {
         </div>
       </section>
 
-      {/* --- CTA TO LEVEL 1 --- */}
-      <div className="flex justify-between pt-10 border-t border-slate-200 mt-20">
-        <Link
-          to="/intro/approach"
-          className="group flex flex-col items-start gap-1"
-        >
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-ocean-600 transition-colors">
-            Previous
-          </span>
-          <span className="text-lg font-serif font-bold text-slate-600 group-hover:text-ocean-900 flex items-center gap-2 transition-all">
-            ← II. The Approach
-          </span>
-        </Link>
-
-        <Link
-          to="/level-1"
-          className="group flex items-center gap-4 bg-ocean-900 text-white pl-6 pr-2 py-2 rounded-full hover:bg-ocean-800 transition-all shadow-lg hover:shadow-ocean-900/20"
-        >
-          <div className="text-left">
-            <span className="block text-[10px] font-bold tracking-widest text-ocean-300 uppercase">
-              Start the journey
-            </span>
-            <span className="font-serif font-bold text-lg">
-              Level 1: The Goal
-            </span>
-          </div>
-          <div className="bg-white/10 p-3 rounded-full group-hover:bg-white/20 transition-colors">
-            <ArrowRight size={20} />
-          </div>
-        </Link>
-      </div>
+      <LessonNav />
     </div>
   );
 };

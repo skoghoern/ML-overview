@@ -1,43 +1,39 @@
-import {
-  HashRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import type { ReactElement } from "react";
+import { HashRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout";
-
-// Import Pages
+import { pages, type PagePath } from "./content/site";
 import Landing from "./pages/Landing";
-import Motivation from "./pages/intro/Motivation";
 import Approach from "./pages/intro/Approach";
 import Framework from "./pages/intro/Framework";
+import Motivation from "./pages/intro/Motivation";
 import Level1 from "./pages/levels/Level1";
 import Level2 from "./pages/levels/Level2";
-import InferenceLanding from "./pages/levels/inference/InferenceLanding";
 import ApproximateMethods from "./pages/levels/inference/ApproximateMethods";
+import InferenceLanding from "./pages/levels/inference/InferenceLanding";
+
+const elements = {
+  "/intro/motivation": <Motivation />,
+  "/intro/approach": <Approach />,
+  "/intro/framework": <Framework />,
+  "/level-1": <Level1 />,
+  "/level-2": <Level2 />,
+  "/level-2/inference": <InferenceLanding />,
+  "/level-2/inference/approximate": <ApproximateMethods />,
+} satisfies Record<PagePath, ReactElement>;
 
 function App() {
   return (
     <Router>
       <Layout>
         <Routes>
-          {/* Serve Landing Page at root */}
           <Route path="/" element={<Landing />} />
-
-          {/* Intro Section */}
-          <Route path="/intro/motivation" element={<Motivation />} />
-          <Route path="/intro/approach" element={<Approach />} />
-          <Route path="/intro/framework" element={<Framework />} />
-
-          {/* Levels */}
-          <Route path="/level-1" element={<Level1 />} />
-          <Route path="/level-2" element={<Level2 />} />
-          <Route path="/level-2/inference" element={<InferenceLanding />} />
-          <Route
-            path="/level-2/inference/approximate"
-            element={<ApproximateMethods />}
-          />
-          {/* Fallback */}
+          {pages.map((item) => (
+            <Route
+              key={item.path}
+              path={item.path}
+              element={elements[item.path]}
+            />
+          ))}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Layout>

@@ -1,24 +1,14 @@
 // src/pages/Landing.tsx
 import React from "react";
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Map, Compass, Anchor } from "lucide-react";
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
+import { page } from "../content/site";
 
 const Landing: React.FC = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-6rem)] md:min-h-[calc(100vh-10rem)] pt-16 md:pt-32 text-center max-w-4xl mx-auto px-6">
+    <div className="flex flex-col items-center justify-center min-h-[calc(100dvh-8rem)] md:min-h-[calc(100vh-10rem)] pt-6 md:pt-32 text-center max-w-4xl mx-auto px-2">
       {/* --- HERO --- */}
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        className="space-y-8 mb-16"
-      >
+      <div className="space-y-8 mb-16">
         <h1 className="text-5xl md:text-7xl font-serif font-bold text-ocean-900 tracking-tight leading-tight">
           Machine Learning
           <br />
@@ -34,7 +24,7 @@ const Landing: React.FC = () => {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
           <Link
-            to="/intro/motivation"
+            to={page("/intro/motivation").path}
             className="group relative inline-flex items-center justify-center gap-3 bg-ocean-900 text-white px-8 py-4 rounded-full text-lg font-bold transition-transform hover:-translate-y-1 hover:shadow-xl shadow-ocean-900/20"
           >
             <span>Start Reading</span>
@@ -44,18 +34,13 @@ const Landing: React.FC = () => {
             />
           </Link>
         </div>
-      </motion.div>
+      </div>
 
       {/* --- CHAPTER PREVIEWS --- */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.4, duration: 0.8 }}
-        className="grid md:grid-cols-3 gap-6 w-full text-left"
-      >
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full text-left">
         {/* Card 1 */}
         <Link
-          to="/intro/motivation"
+          to={page("/intro/motivation").path}
           className="group p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md hover:border-ocean-200 transition-all"
         >
           <div className="w-10 h-10 bg-ocean-50 text-ocean-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -72,7 +57,7 @@ const Landing: React.FC = () => {
 
         {/* Card 2 */}
         <Link
-          to="/intro/framework"
+          to={page("/intro/framework").path}
           className="group p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md hover:border-ocean-200 transition-all"
         >
           <div className="w-10 h-10 bg-ocean-50 text-ocean-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -88,7 +73,7 @@ const Landing: React.FC = () => {
 
         {/* Card 3 */}
         <Link
-          to="/level-1"
+          to={page("/level-1").path}
           className="group p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md hover:border-ocean-200 transition-all"
         >
           <div className="w-10 h-10 bg-ocean-50 text-ocean-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -101,7 +86,7 @@ const Landing: React.FC = () => {
             From Computational Goals to Algorithmic Implementation.
           </p>
         </Link>
-      </motion.div>
+      </div>
     </div>
   );
 };

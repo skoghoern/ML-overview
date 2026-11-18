@@ -2,8 +2,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import {
-  ArrowRight,
-  Compass,
   Search,
   Anchor,
   Zap,
@@ -14,7 +12,8 @@ import {
   Code,
   Globe,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { LessonNav } from "../../components/lesson/LessonNav";
+import { PageHeader } from "../../components/lesson/PageHeader";
 
 const container = {
   hidden: { opacity: 0 },
@@ -32,34 +31,19 @@ const item = {
 const Approach: React.FC = () => {
   return (
     <div className="max-w-3xl mx-auto pb-32">
-      {/* --- HEADER --- */}
-      <motion.header
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="space-y-8 mb-16"
-      >
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-ocean-50 text-ocean-800 text-xs font-bold tracking-widest uppercase border border-ocean-100">
-          <Compass size={14} />
-          <span>Part II: The Approach</span>
-        </div>
-        <h1 className="text-4xl md:text-5xl font-serif text-ocean-900 leading-tight">
-          Building a Map
-        </h1>
-        <div className="text-lg md:text-xl text-slate-600 leading-relaxed space-y-6">
-          <p>
-            If we accept the premise that true mastery requires{" "}
-            <strong className="text-ocean-900">Analysis</strong> and{" "}
-            <strong className="text-ocean-900">Evaluation</strong>, then we
-            cannot simply list algorithms in isolation. We need a map.
-          </p>
-          <p className="text-base text-slate-500">
-            This page provides a structured, high-level overview of the current
-            Machine Learning landscape. While we will ground our comparison in
-            mathematics and physics, our primary focus remains conceptual.
-          </p>
-        </div>
-      </motion.header>
+      <PageHeader title="Building a Map">
+        <p>
+          If we accept the premise that true mastery requires{" "}
+          <strong className="text-ocean-900">Analysis</strong> and{" "}
+          <strong className="text-ocean-900">Evaluation</strong>, then we
+          cannot simply list algorithms in isolation. We need a map.
+        </p>
+        <p className="text-base text-slate-500">
+          This page provides a structured, high-level overview of the current
+          Machine Learning landscape. While we will ground our comparison in
+          mathematics and physics, our primary focus remains conceptual.
+        </p>
+      </PageHeader>
 
       {/* --- WHAT THIS IS NOT / IS --- */}
       <motion.section
@@ -216,32 +200,7 @@ const Approach: React.FC = () => {
         </div>
       </motion.section>
 
-      {/* --- NAV --- */}
-      <div className="flex justify-between pt-10 mt-16 border-t border-slate-200">
-        <Link
-          to="/intro/motivation"
-          className="group flex flex-col items-start gap-1"
-        >
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-ocean-600 transition-colors">
-            Previous
-          </span>
-          <span className="text-lg font-serif font-bold text-slate-600 group-hover:text-ocean-900 flex items-center gap-2 transition-all">
-            ← I. The Motivation
-          </span>
-        </Link>
-
-        <Link
-          to="/intro/framework"
-          className="group flex flex-col items-end gap-1 text-right"
-        >
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-ocean-600 transition-colors">
-            Next Lesson
-          </span>
-          <span className="text-xl font-serif font-bold text-ocean-900 flex items-center gap-2 group-hover:gap-4 transition-all">
-            III. The Framework <ArrowRight size={20} />
-          </span>
-        </Link>
-      </div>
+      <LessonNav />
     </div>
   );
 };

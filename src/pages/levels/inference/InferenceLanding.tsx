@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BlockMath, InlineMath } from "react-katex";
 import {
-  ArrowLeft,
   ArrowRight,
   GitBranch,
   Users,
@@ -16,13 +15,10 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { LessonNav } from "../../../components/lesson/LessonNav";
+import { PageHeader } from "../../../components/lesson/PageHeader";
+import { type PagePath } from "../../../content/site";
 import { cn } from "../../../lib/utils";
-
-// --- ANIMATION VARIANTS ---
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
 
 // --- DATA: THE INFERENCE MATRIX ---
 const INFERENCE_TYPES = [
@@ -34,6 +30,7 @@ const INFERENCE_TYPES = [
     title: "Exact Frequentist",
     icon: Calculator,
     color: "bg-blue-500",
+    activeClass: "border-blue-500 ring-blue-100",
     lightColor: "bg-blue-50 text-blue-900 border-blue-200",
     desc: "The textbook solution. We use calculus to derive a single, optimal formula for the weights.",
     examples: "OLS Regression, Least Squares",
@@ -49,6 +46,7 @@ const INFERENCE_TYPES = [
     title: "Exact Bayesian",
     icon: Users,
     color: "bg-indigo-500",
+    activeClass: "border-indigo-500 ring-indigo-100",
     lightColor: "bg-indigo-50 text-indigo-900 border-indigo-200",
     desc: "The 'Holy Grail'. We mathematically derive the full probability distribution without approximation.",
     examples: "Conjugate Priors, Kalman Filters",
@@ -64,6 +62,7 @@ const INFERENCE_TYPES = [
     title: "Numerical Frequentist",
     icon: TrendingUp,
     color: "bg-teal-500",
+    activeClass: "border-teal-500 ring-teal-100",
     lightColor: "bg-teal-50 text-teal-900 border-teal-200",
     desc: "The workhorse of AI. We can't solve the math, so we use gradients to 'surf' down the error mountain.",
     examples: "SGD, Adam, Backpropagation",
@@ -79,13 +78,14 @@ const INFERENCE_TYPES = [
     title: "Approximate Bayesian",
     icon: GitBranch,
     color: "bg-rose-500",
+    activeClass: "border-rose-500 ring-rose-100",
     lightColor: "bg-rose-50 text-rose-900 border-rose-200",
     desc: "The best of both worlds? We want the full distribution, but the math is too hard. So we approximate it.",
     examples: "MCMC, Variational Inference",
     math: "q(\\theta) \\approx P(\\theta|D)",
     pros: "Captures uncertainty for complex models.",
     cons: "Computationally expensive (MCMC) or biased (VI).",
-    link: "/level-2/inference/approximate",
+    link: "/level-2/inference/approximate" satisfies PagePath,
   },
 ];
 
@@ -210,36 +210,19 @@ const InferenceLanding: React.FC = () => {
 
   return (
     <div className="max-w-6xl mx-auto pb-32">
-      {/* --- HERO HEADER: STACKED VERTICALLY --- */}
-      <motion.header
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        className="max-w-4xl mx-auto mb-24 space-y-12"
-      >
-        <div className="text-center space-y-8">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-50 text-teal-800 text-xs font-bold tracking-widest uppercase border border-teal-100">
-            <GitBranch size={14} />
-            <span>Level 2.2: The Inference</span>
-          </div>
-
-          <h1 className="text-4xl md:text-5xl font-serif text-ocean-900 leading-tight">
-            How do we learn?
-          </h1>
-
-          <div className="text-lg text-slate-600 leading-relaxed space-y-6 max-w-2xl mx-auto">
-            <p>
-              If the <strong>Model</strong> is the map of the territory, then{" "}
-              <strong>Inference</strong> is the compass we use to navigate it.
-            </p>
-            <p>
-              In a perfect world, learning is not a mystery. It is a
-              mathematical certainty described by{" "}
-              <strong>Bayes' Theorem</strong>. It tells us exactly how to update
-              our beliefs after seeing new data.
-            </p>
-          </div>
-        </div>
+      <div className="max-w-4xl mx-auto mb-24 space-y-12">
+        <PageHeader align="center" className="mb-0" title="How do we learn?">
+          <p>
+            If the <strong>Model</strong> is the map of the territory, then{" "}
+            <strong>Inference</strong> is the compass we use to navigate it.
+          </p>
+          <p>
+            In a perfect world, learning is not a mystery. It is a
+            mathematical certainty described by <strong>Bayes' Theorem</strong>
+            . It tells us exactly how to update our beliefs after seeing new
+            data.
+          </p>
+        </PageHeader>
 
         {/* BAYES CARD: COLLAPSIBLE */}
         <div className="bg-slate-900 text-white rounded-3xl shadow-2xl relative overflow-hidden border border-slate-700 ring-1 ring-white/10">
@@ -304,7 +287,7 @@ const InferenceLanding: React.FC = () => {
             )}
           </AnimatePresence>
         </div>
-      </motion.header>
+      </div>
 
       {/* --- THE MATRIX: EXPLANATION --- */}
       <section className="space-y-12 mb-16 max-w-4xl mx-auto">
@@ -442,15 +425,13 @@ const InferenceLanding: React.FC = () => {
               )}
             />
 
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeType.id}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-                className="space-y-6"
-              >
+            <motion.div
+              key={activeType.id}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-6"
+            >
                 <div className="space-y-2">
                   <span className="text-xs font-bold uppercase tracking-widest text-slate-400">
                     {activeType.category}
@@ -515,49 +496,28 @@ const InferenceLanding: React.FC = () => {
                     </Link>
                   </div>
                 )}
-              </motion.div>
-            </AnimatePresence>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* --- NAVIGATION FOOTER --- */}
-      <div className="flex justify-between pt-10 border-t border-slate-200 mt-24">
-        <Link to="/level-2" className="group flex flex-col items-start gap-1">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-ocean-600 transition-colors">
-            Back
-          </span>
-          <span className="text-lg font-serif font-bold text-slate-600 group-hover:text-ocean-900 flex items-center gap-2 transition-all">
-            <ArrowLeft size={20} /> Level 2: The Algorithm
-          </span>
-        </Link>
-
-        <Link
-          to="/level-2/inference/approximate"
-          className="group flex flex-col items-end gap-1 text-right"
-        >
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-ocean-600 transition-colors">
-            Next Lesson
-          </span>
-          <span className="text-xl font-serif font-bold text-ocean-900 flex items-center gap-2 group-hover:gap-4 transition-all">
-            2.2.1 Approx. Methods <ArrowRight size={20} />
-          </span>
-        </Link>
-      </div>
+      <LessonNav />
     </div>
   );
 };
 
 // --- HELPER COMPONENT FOR GRID CELLS ---
 // Use min-w-0 to allow shrinking and prevent overflow
+type InferenceType = (typeof INFERENCE_TYPES)[number];
+
 const MatrixCell = ({
   item,
   isActive,
   onClick,
 }: {
-  item: (typeof INFERENCE_TYPES)[0];
+  item: InferenceType;
   isActive: boolean;
-  onClick: (i: any) => void;
+  onClick: (item: InferenceType) => void;
 }) => {
   return (
     <button
@@ -565,12 +525,11 @@ const MatrixCell = ({
       className={cn(
         "relative p-3 md:p-4 rounded-xl border-2 text-left transition-all duration-300 flex flex-col justify-between group h-full min-h-[140px] min-w-0 overflow-hidden",
         isActive
-          ? `border-${
-              item.color.split("-")[1]
-            }-500 bg-white shadow-lg ring-1 ring-${
-              item.color.split("-")[1]
-            }-100 z-10 scale-[1.02]`
-          : "border-slate-200 bg-white/50 hover:bg-white hover:border-slate-300"
+          ? cn(
+              item.activeClass,
+              "bg-white shadow-lg ring-1 z-10 scale-[1.02]",
+            )
+          : "border-slate-200 bg-white/50 hover:bg-white hover:border-slate-300",
       )}
     >
       <div className="flex justify-between items-start w-full">

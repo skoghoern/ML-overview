@@ -1,9 +1,7 @@
 // src/pages/intro/Motivation.tsx
 import React, { useState } from "react";
-import { motion, AnimatePresence, easeOut } from "framer-motion";
+import { motion } from "framer-motion";
 import {
-  ArrowRight,
-  BookOpen,
   Waves,
   Lightbulb,
   Fish,
@@ -14,7 +12,8 @@ import {
   Scale,
   Zap,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { LessonNav } from "../../components/lesson/LessonNav";
+import { PageHeader } from "../../components/lesson/PageHeader";
 import { cn } from "../../lib/utils";
 
 // --- DATA: BLOOM'S TAXONOMY LEVELS ---
@@ -81,38 +80,20 @@ const BLOOM_LEVELS = [
   },
 ];
 
-// Hero section entrance animation
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: easeOut },
-  },
-};
-
 const Motivation: React.FC = () => {
   const [activeWater, setActiveWater] = useState<"dl" | "actinf">("dl");
   const [activeBloom, setActiveBloom] = useState(BLOOM_LEVELS[2]); // Default to Analyze
 
   return (
     <div className="max-w-3xl mx-auto pb-32">
-      {/* --- HERO SECTION --- */}
-      <motion.header
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        className="space-y-8 mb-16"
-      >
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-ocean-50 text-ocean-800 text-xs font-bold tracking-widest uppercase border border-ocean-100">
-          <BookOpen size={14} />
-          <span>Part I: Motivation</span>
-        </div>
-
-        <h1 className="text-5xl md:text-6xl font-serif text-ocean-900 leading-[1.1]">
-          "What the hell <br /> is water?"
-        </h1>
-      </motion.header>
+      <PageHeader
+        size="lg"
+        title={
+          <>
+            "What the hell <br /> is water?"
+          </>
+        }
+      />
 
       {/* --- THE PARABLE --- */}
       <section className="space-y-8 mb-24">
@@ -206,13 +187,11 @@ const Motivation: React.FC = () => {
           </div>
 
           <div className="p-8 md:p-12 min-h-[300px] flex items-center justify-center relative">
-            <AnimatePresence mode="wait">
-              {activeWater === "dl" ? (
+            {activeWater === "dl" ? (
                 <motion.div
                   key="dl"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3 }}
                   className="text-center max-w-lg mx-auto"
                 >
@@ -239,7 +218,6 @@ const Motivation: React.FC = () => {
                   key="actinf"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3 }}
                   className="text-center max-w-lg mx-auto"
                 >
@@ -263,7 +241,6 @@ const Motivation: React.FC = () => {
                   </p>
                 </motion.div>
               )}
-            </AnimatePresence>
           </div>
         </div>
       </section>
@@ -326,13 +303,11 @@ const Motivation: React.FC = () => {
 
           {/* RIGHT: THE DETAILS CARD */}
           <div className="w-full md:w-1/2">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeBloom.id}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.2 }}
+            <motion.div
+              key={activeBloom.id}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.2 }}
                 className={cn(
                   "h-full p-6 rounded-2xl border-2 flex flex-col justify-center",
                   activeBloom.lightColor
@@ -372,8 +347,7 @@ const Motivation: React.FC = () => {
                     </p>
                   </div>
                 </div>
-              </motion.div>
-            </AnimatePresence>
+            </motion.div>
           </div>
         </div>
 
@@ -394,20 +368,7 @@ const Motivation: React.FC = () => {
         </div>
       </section>
 
-      {/* --- NAVIGATION --- */}
-      <div className="flex justify-end pt-10 border-t border-slate-200">
-        <Link
-          to="/intro/approach"
-          className="group flex flex-col items-end gap-1 text-right"
-        >
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-ocean-600 transition-colors">
-            Next Lesson
-          </span>
-          <span className="text-xl font-serif font-bold text-ocean-900 flex items-center gap-2 group-hover:gap-4 transition-all">
-            II. The Approach <ArrowRight size={20} />
-          </span>
-        </Link>
-      </div>
+      <LessonNav />
     </div>
   );
 };

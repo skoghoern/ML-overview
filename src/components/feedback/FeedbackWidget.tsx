@@ -1,7 +1,7 @@
 // src/components/feedback/FeedbackWidget.tsx
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   MessageSquare,
   X,
@@ -14,6 +14,8 @@ import {
   Lightbulb,
   Bug,
 } from "lucide-react";
+import { useFormSubmit } from "../../hooks/useFormSubmit";
+import { formspreeEndpoint } from "../../lib/forms";
 import { cn } from "../../lib/utils";
 
 // --- CONFIGURATION ---
@@ -60,85 +62,53 @@ const FeedbackWidget: React.FC = () => {
   const [hoveredRating, setHoveredRating] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(FEEDBACK_TYPES[0]); // Default to first
 
-  const [status, setStatus] = useState<
-    "idle" | "submitting" | "success" | "error"
-  >("idle");
-
-  const FORM_ENDPOINT = `https://formspree.io/f/${
-    import.meta.env.VITE_FORMSPREE_ID
-  }`;
+  const { status, submit, reset, configured } = useFormSubmit(
+    formspreeEndpoint(import.meta.env.VITE_FORMSPREE_ID),
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!feedback.trim()) return;
 
-    setStatus("submitting");
+    const ok = await submit({
+      page: location.pathname,
+      rating,
+      category: selectedCategory.label,
+      prompt_answered: selectedCategory.question,
+      message: feedback,
+      timestamp: new Date().toISOString(),
+    });
+    if (!ok) return;
 
-    try {
-      // Simulation or Real Submission
-      const payload = {
-        page: location.pathname,
-        rating: rating,
-        category: selectedCategory.label, // Send the category!
-        prompt_answered: selectedCategory.question, // Context for the answer
-        message: feedback,
-        timestamp: new Date().toISOString(),
-      };
-
-      if (FORM_ENDPOINT.includes("YOUR_FORM_ID")) {
-        console.log("Simulating submission:", payload);
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-      } else {
-        const response = await fetch(FORM_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        if (!response.ok) throw new Error("Submission failed");
-      }
-
-      setStatus("success");
-      setFeedback("");
-      setRating(0);
-
-      // Reset to default category after success
-      setTimeout(() => {
-        setIsOpen(false);
-        setStatus("idle");
-        setSelectedCategory(FEEDBACK_TYPES[0]);
-      }, 3000);
-    } catch (error) {
-      console.error(error);
-      setStatus("error");
-    }
+    setFeedback("");
+    setRating(0);
+    window.setTimeout(() => {
+      setIsOpen(false);
+      reset();
+      setSelectedCategory(FEEDBACK_TYPES[0]);
+    }, 3000);
   };
 
   return (
     <>
       {/* Toggle Button */}
       <motion.button
+        type="button"
+        aria-label="Send feedback"
         onClick={() => setIsOpen(true)}
         className={cn(
           "fixed bottom-6 right-6 z-50 p-4 rounded-full shadow-lg transition-all",
           "bg-ocean-900 text-white hover:bg-ocean-800 hover:scale-105 active:scale-95",
           isOpen && "hidden"
         )}
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
         whileHover={{ y: -2 }}
       >
         <MessageSquare size={24} />
       </motion.button>
 
       {/* Modal */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-6 right-6 z-50 w-full max-w-md" // Slightly wider for categories
-          >
+      {isOpen && (
+          <div className="fixed inset-x-4 bottom-4 z-50 max-h-[min(32rem,calc(100dvh-2rem))] overflow-y-auto sm:inset-x-auto sm:right-6 sm:w-full sm:max-w-md">
             <div className="bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden">
               {/* Header */}
               <div className="bg-ocean-50 px-6 py-4 border-b border-ocean-100 flex justify-between items-center">
@@ -152,8 +122,10 @@ const FeedbackWidget: React.FC = () => {
                   </p>
                 </div>
                 <button
+                  type="button"
                   onClick={() => setIsOpen(false)}
                   className="text-slate-400 hover:text-slate-600 transition-colors"
+                  aria-label="Close feedback"
                 >
                   <X size={20} />
                 </button>
@@ -254,7 +226,11 @@ const FeedbackWidget: React.FC = () => {
                     {status === "error" && (
                       <div className="flex items-center gap-2 text-xs text-rose-600 bg-rose-50 p-2 rounded">
                         <AlertCircle size={14} />
-                        <span>Failed to send. Please try again.</span>
+                        <span>
+                          {configured
+                            ? "Failed to send. Please try again."
+                            : "Feedback is not configured."}
+                        </span>
                       </div>
                     )}
 
@@ -282,9 +258,8 @@ const FeedbackWidget: React.FC = () => {
                 )}
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
     </>
   );
 };

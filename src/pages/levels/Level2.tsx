@@ -3,9 +3,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
-  ArrowLeft,
   ArrowRight,
-  Map,
   Eye,
   GitBranch,
   Cpu,
@@ -14,6 +12,9 @@ import {
   Network,
   Search,
 } from "lucide-react";
+import { LessonNav } from "../../components/lesson/LessonNav";
+import { PageHeader } from "../../components/lesson/PageHeader";
+import { page } from "../../content/site";
 import { cn } from "../../lib/utils";
 
 // --- CONFIGURATION ---
@@ -33,11 +34,6 @@ const TOPOLOGY = {
 };
 
 // --- ANIMATION VARIANTS ---
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
-
 const cardHover = {
   rest: { scale: 1, y: 0 },
   hover: { scale: 1.02, y: -5, transition: { duration: 0.2 } },
@@ -48,36 +44,19 @@ const Level2: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto pb-32">
-      {/* --- HERO HEADER --- */}
-      <motion.header
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        className="space-y-8 mb-16"
-      >
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-ocean-50 text-ocean-800 text-xs font-bold tracking-widest uppercase border border-ocean-100">
-          <Map size={14} />
-          <span>Level 2: The Algorithm</span>
-        </div>
-
-        <h1 className="text-4xl md:text-5xl font-serif text-ocean-900 leading-tight">
-          The Algorithmic Solution
-        </h1>
-
-        <div className="text-lg text-slate-600 leading-relaxed space-y-6">
-          <p>
-            Once we have defined <strong>The Goal</strong> (Level 1), we must
-            define the machine that will achieve it.
-          </p>
-          <p>
-            In the messy real world of coding, "the algorithm" is often treated
-            as a black box. However, Christopher Bishop argues that for a true
-            mathematical understanding, we must slice this box in half:
-            distinguishing the <strong>Representation</strong> from the{" "}
-            <strong>Process</strong>.
-          </p>
-        </div>
-      </motion.header>
+      <PageHeader title="The Algorithmic Solution">
+        <p>
+          Once we have defined <strong>The Goal</strong> (Level 1), we must
+          define the machine that will achieve it.
+        </p>
+        <p>
+          In the messy real world of coding, "the algorithm" is often treated
+          as a black box. However, Christopher Bishop argues that for a true
+          mathematical understanding, we must slice this box in half:
+          distinguishing the <strong>Representation</strong> from the{" "}
+          <strong>Process</strong>.
+        </p>
+      </PageHeader>
 
       {/* --- INTERACTIVE BISHOP'S EQUATION --- */}
       <section className="mb-24">
@@ -386,58 +365,50 @@ const Level2: React.FC = () => {
 
       {/* --- SPLIT PATHS (CARDS) --- */}
       <section className="grid md:grid-cols-2 gap-8 mb-24">
-        {/* CARD 1: THE MODEL */}
-        <Link to="/level-2/model" className="block h-full">
-          <motion.div
-            initial="rest"
-            whileHover="hover"
-            variants={cardHover}
-            className="h-full bg-white rounded-2xl border border-slate-200 shadow-lg overflow-hidden group relative"
-          >
-            {/* Top Color Bar */}
-            <div className="h-2 bg-gradient-to-r from-blue-500 to-indigo-500" />
+        {/* CARD 1: THE MODEL — no route yet, so this is not a link */}
+        <div className="h-full bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden relative">
+          <div className="h-2 bg-gradient-to-r from-blue-500 to-indigo-500" />
 
-            <div className="p-8 space-y-6">
-              <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center border border-blue-100 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
-                <Eye size={28} />
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-serif font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
-                  The Model
-                </h3>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">
-                  Architecture & Representation
-                </p>
-              </div>
-
-              <p className="text-slate-600 leading-relaxed">
-                Dive deeper into the different ways we can represent reality
-                mathematically, from Neural Networks to Graphical Models.
-              </p>
-
-              <div className="pt-4 border-t border-slate-100">
-                <ul className="space-y-2 text-sm text-slate-500">
-                  <li className="flex items-center gap-2">
-                    <Variable size={14} className="text-blue-400" /> Neural
-                    Networks
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Variable size={14} className="text-blue-400" /> Gaussian
-                    Processes
-                  </li>
-                </ul>
-              </div>
-
-              <div className="flex items-center gap-2 text-blue-600 font-bold text-sm group-hover:gap-4 transition-all">
-                Explore Architecture <ArrowRight size={16} />
-              </div>
+          <div className="p-8 space-y-6">
+            <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center border border-blue-100">
+              <Eye size={28} />
             </div>
-          </motion.div>
-        </Link>
+
+            <div>
+              <h3 className="text-2xl font-serif font-bold text-slate-900">
+                The Model
+              </h3>
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">
+                Architecture & Representation
+              </p>
+            </div>
+
+            <p className="text-slate-600 leading-relaxed">
+              Dive deeper into the different ways we can represent reality
+              mathematically, from Neural Networks to Graphical Models.
+            </p>
+
+            <div className="pt-4 border-t border-slate-100">
+              <ul className="space-y-2 text-sm text-slate-500">
+                <li className="flex items-center gap-2">
+                  <Variable size={14} className="text-blue-400" /> Neural
+                  Networks
+                </li>
+                <li className="flex items-center gap-2">
+                  <Variable size={14} className="text-blue-400" /> Gaussian
+                  Processes
+                </li>
+              </ul>
+            </div>
+
+            <p className="text-sm font-bold uppercase tracking-widest text-slate-400">
+              Coming soon
+            </p>
+          </div>
+        </div>
 
         {/* CARD 2: THE INFERENCE */}
-        <Link to="/level-2/inference" className="block h-full">
+        <Link to={page("/level-2/inference").path} className="block h-full">
           <motion.div
             initial="rest"
             whileHover="hover"
@@ -502,27 +473,7 @@ const Level2: React.FC = () => {
         </p>
       </div>
 
-      {/* --- NAVIGATION FOOTER --- */}
-      <div className="flex justify-between pt-10 border-t border-slate-200">
-        <Link to="/level-1" className="group flex flex-col items-start gap-1">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-ocean-600 transition-colors">
-            Previous Level
-          </span>
-          <span className="text-lg font-serif font-bold text-slate-600 group-hover:text-ocean-900 flex items-center gap-2 transition-all">
-            <ArrowLeft size={20} /> Level 1: The Goal
-          </span>
-        </Link>
-
-        {/* Placeholder for future levels */}
-        <div className="opacity-40 flex flex-col items-end gap-1 text-right select-none">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
-            Coming Soon
-          </span>
-          <span className="text-lg font-serif font-bold text-slate-400 flex items-center gap-2">
-            Level 3: Implementation
-          </span>
-        </div>
-      </div>
+      <LessonNav />
     </div>
   );
 };

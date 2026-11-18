@@ -15,6 +15,12 @@
 
   --color-ocean-50: #f0f9ff;
   --color-ocean-100: #e0f2fe;
+  --color-ocean-200: #bae6fd;
+  --color-ocean-300: #7dd3fc;
+  --color-ocean-400: #38bdf8;
+  --color-ocean-500: #0ea5e9;
+  --color-ocean-600: #0284c7;
+  --color-ocean-700: #0369a1;
   --color-ocean-800: #075985;
   --color-ocean-900: #0c4a6e;
   --color-ocean-950: #082f49;
@@ -36,6 +42,24 @@ h5,
 h6 {
   font-family: var(--font-serif);
   color: var(--color-ocean-900);
+}
+
+/* Phone drawer position. Tailwind's translate utilities were leaving the menu on screen. */
+@media (max-width: 767px) {
+  .drawer-closed {
+    left: -18rem;
+  }
+  .drawer-open {
+    left: 0;
+  }
+}
+
+/* Long display equations scroll inside the column instead of widening the page. */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  padding-bottom: 0.25rem;
 }
 @layer utilities {
   .scrollbar-subtle {

@@ -1,10 +1,8 @@
 // src/pages/levels/Level1.tsx
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { BlockMath } from "react-katex";
 import {
-  ArrowRight,
-  ArrowLeft,
   Anchor,
   Target,
   Scale,
@@ -16,7 +14,8 @@ import {
   MousePointerClick,
   Lightbulb,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { LessonNav } from "../../components/lesson/LessonNav";
+import { PageHeader } from "../../components/lesson/PageHeader";
 import { cn } from "../../lib/utils";
 
 // --- DATA: THE 4 COMPUTATIONAL GOALS ---
@@ -28,6 +27,7 @@ const GOALS = [
     phrase: "Fitting the Weights",
     icon: Target,
     color: "bg-blue-500",
+    activeClass: "border-blue-500",
     lightColor: "bg-blue-50 text-blue-900 border-blue-200",
     description:
       "The simplest goal: Find the specific parameters (weights) that make the observed data most likely.",
@@ -49,6 +49,7 @@ const GOALS = [
     phrase: "Fitting with Restraint",
     icon: Anchor,
     color: "bg-purple-500",
+    activeClass: "border-purple-500",
     lightColor: "bg-purple-50 text-purple-900 border-purple-200",
     description:
       "Adds 'common sense' to MLE by introducing a Prior belief that parameters shouldn't be extreme.",
@@ -69,6 +70,7 @@ const GOALS = [
     phrase: "Finding the Best Model",
     icon: Scale,
     color: "bg-teal-500",
+    activeClass: "border-teal-500",
     lightColor: "bg-teal-50 text-teal-900 border-teal-200",
     description:
       "A higher-order goal. We aren't just looking for weights; we are selecting the Model Architecture itself.",
@@ -90,6 +92,7 @@ const GOALS = [
     phrase: "The Wisdom of the Crowd",
     icon: Users,
     color: "bg-rose-500",
+    activeClass: "border-rose-500",
     lightColor: "bg-rose-50 text-rose-900 border-rose-200",
     description:
       "The most rigorous goal. Stop trying to pick a single 'winner' entirely.",
@@ -105,50 +108,28 @@ const GOALS = [
   },
 ];
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
-
 const Level1: React.FC = () => {
   const [activeGoalId, setActiveGoalId] = useState("evidence"); // Default to Evidence (ActInf core)
   const activeGoal = GOALS.find((g) => g.id === activeGoalId) || GOALS[0];
 
   return (
     <div className="max-w-4xl mx-auto pb-32">
-      {/* --- HERO HEADER --- */}
-      <motion.header
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        className="space-y-8 mb-16"
-      >
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-ocean-50 text-ocean-800 text-xs font-bold tracking-widest uppercase border border-ocean-100">
-          <Anchor size={14} />
-          <span>Level 1: The Goal</span>
-        </div>
-
-        <h1 className="text-4xl md:text-5xl font-serif text-ocean-900 leading-tight">
-          The Computational Level
-        </h1>
-
-        <div className="text-lg text-slate-600 leading-relaxed space-y-6">
-          <p>
-            We begin at the top of Marr's hierarchy:{" "}
-            <strong>The Computational Goal</strong>.
-          </p>
-          <p>
-            Before we decide if we are using a Neural Network or a Gaussian
-            process, we must ask:
-            <span className="text-ocean-900 font-semibold mx-1">
-              What is the objective?
-            </span>
-            In the ocean of intelligence, almost every goal can be framed as a
-            search for the best relationship between <strong>Data</strong> and{" "}
-            <strong>Models</strong>.
-          </p>
-        </div>
-      </motion.header>
+      <PageHeader title="The Computational Level">
+        <p>
+          We begin at the top of Marr's hierarchy:{" "}
+          <strong>The Computational Goal</strong>.
+        </p>
+        <p>
+          Before we decide if we are using a Neural Network or a Gaussian
+          process, we must ask:
+          <span className="text-ocean-900 font-semibold mx-1">
+            What is the objective?
+          </span>
+          In the ocean of intelligence, almost every goal can be framed as a
+          search for the best relationship between <strong>Data</strong> and{" "}
+          <strong>Models</strong>.
+        </p>
+      </PageHeader>
 
       {/* --- INTERACTIVE GOAL EXPLORER --- */}
       <section className="mb-24">
@@ -171,10 +152,8 @@ const Level1: React.FC = () => {
                 className={cn(
                   "relative flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all duration-200 h-32",
                   isActive
-                    ? `border-${
-                        goal.color.split("-")[1]
-                      }-500 bg-white shadow-lg scale-105 z-10`
-                    : "border-slate-100 bg-slate-50 text-slate-400 hover:bg-white hover:border-slate-200"
+                    ? cn(goal.activeClass, "bg-white shadow-lg scale-105 z-10")
+                    : "border-slate-100 bg-slate-50 text-slate-400 hover:bg-white hover:border-slate-200",
                 )}
               >
                 <div
@@ -209,15 +188,13 @@ const Level1: React.FC = () => {
 
         {/* 2. The Detail View */}
         <div className="bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden min-h-[400px]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeGoalId}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
-              className="p-8 md:p-10"
-            >
+          <motion.div
+            key={activeGoalId}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 }}
+            className="p-8 md:p-10"
+          >
               {/* Header */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 border-b border-slate-100 pb-6">
                 <div>
@@ -311,8 +288,7 @@ const Level1: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
-          </AnimatePresence>
+          </motion.div>
         </div>
       </section>
 
@@ -380,32 +356,7 @@ const Level1: React.FC = () => {
         </p>
       </section>
 
-      {/* --- NAVIGATION FOOTER --- */}
-      <div className="flex justify-between pt-10 mt-16 border-t border-slate-200">
-        <Link
-          to="/intro/framework"
-          className="group flex flex-col items-start gap-1"
-        >
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-ocean-600 transition-colors">
-            Previous Part
-          </span>
-          <span className="text-lg font-serif font-bold text-slate-600 group-hover:text-ocean-900 flex items-center gap-2 transition-all">
-            <ArrowLeft size={20} /> III. The Framework
-          </span>
-        </Link>
-
-        <Link
-          to="/level-2"
-          className="group flex flex-col items-end gap-1 text-right"
-        >
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest group-hover:text-ocean-600 transition-colors">
-            Next Level
-          </span>
-          <span className="text-xl font-serif font-bold text-ocean-900 flex items-center gap-2 group-hover:gap-4 transition-all">
-            Level 2: The Algo <ArrowRight size={20} />
-          </span>
-        </Link>
-      </div>
+      <LessonNav />
     </div>
   );
 };
