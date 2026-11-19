@@ -1,11 +1,12 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { neighbors } from "../../content/site";
+import { getPage, neighbors } from "../../content/site";
 
 export function LessonNav() {
   const { pathname } = useLocation();
   const { prev, next } = neighbors(pathname);
-  if (!prev && !next) return null;
+  const section = getPage(pathname)?.section;
+  if (!prev && !next && section !== "levels") return null;
 
   return (
     <div className="flex flex-wrap justify-between gap-x-6 gap-y-4 pt-10 mt-16 border-t border-slate-200">
@@ -36,7 +37,7 @@ export function LessonNav() {
             <ArrowRight size={20} className="shrink-0" />
           </span>
         </Link>
-      ) : (
+      ) : section === "levels" ? (
         <div className="opacity-40 flex flex-col items-end gap-1 text-right select-none">
           <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
             Coming soon
@@ -45,6 +46,8 @@ export function LessonNav() {
             Level 3: Implementation
           </span>
         </div>
+      ) : (
+        <span />
       )}
     </div>
   );

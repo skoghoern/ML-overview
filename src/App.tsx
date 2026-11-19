@@ -10,6 +10,8 @@ import Level1 from "./pages/levels/Level1";
 import Level2 from "./pages/levels/Level2";
 import ApproximateMethods from "./pages/levels/inference/ApproximateMethods";
 import InferenceLanding from "./pages/levels/inference/InferenceLanding";
+import { MathBranch } from "./pages/maths/MathBranch";
+import ErgodicTheory from "./pages/maths/ergodic/ErgodicTheory";
 
 const elements = {
   "/intro/motivation": <Motivation />,
@@ -19,6 +21,14 @@ const elements = {
   "/level-2": <Level2 />,
   "/level-2/inference": <InferenceLanding />,
   "/level-2/inference/approximate": <ApproximateMethods />,
+  "/maths": <MathBranch id="map" />,
+  "/maths/origins": <MathBranch id="origins" />,
+  "/maths/foundations": <MathBranch id="foundations" />,
+  "/maths/structures": <MathBranch id="structures" />,
+  "/maths/spaces": <MathBranch id="spaces" />,
+  "/maths/changes": <MathBranch id="changes" />,
+  "/maths/changes/ergodic-theory": <ErgodicTheory />,
+  "/maths/applied": <MathBranch id="applied" />,
 } satisfies Record<PagePath, ReactElement>;
 
 function App() {

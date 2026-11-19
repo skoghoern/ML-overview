@@ -1,7 +1,7 @@
 // src/pages/Landing.tsx
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Map, Compass, Anchor } from "lucide-react";
+import { ArrowRight, Map, Compass, Anchor, Sigma } from "lucide-react";
 import { page } from "../content/site";
 
 const Landing: React.FC = () => {
@@ -85,6 +85,28 @@ const Landing: React.FC = () => {
           <p className="text-sm text-slate-500 leading-relaxed">
             From Computational Goals to Algorithmic Implementation.
           </p>
+        </Link>
+
+        <Link
+          to={page("/maths").path}
+          className="group md:col-span-3 p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md hover:border-ocean-200 transition-all flex flex-col gap-4 sm:flex-row sm:items-center"
+        >
+          <div className="w-10 h-10 shrink-0 bg-ocean-50 text-ocean-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+            <Sigma size={20} />
+          </div>
+          <div className="min-w-0">
+            <h3 className="font-serif font-bold text-lg text-ocean-900 mb-1">
+              Maths
+            </h3>
+            <p className="text-sm text-slate-500 leading-relaxed">
+              Explanations arranged like the map of mathematics. Ergodic theory
+              is the first page.
+            </p>
+          </div>
+          <ArrowRight
+            size={18}
+            className="hidden sm:block ml-auto shrink-0 text-ocean-600 group-hover:translate-x-1 transition-transform"
+          />
         </Link>
       </div>
     </div>

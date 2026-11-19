@@ -2,14 +2,21 @@ import type { LucideIcon } from "lucide-react";
 import {
   Activity,
   Anchor,
+  Box,
   Compass,
+  FlaskConical,
   GitBranch,
+  Hexagon,
+  Infinity as InfinityIcon,
+  Landmark,
   Layers,
   Lightbulb,
   Map,
+  Milestone,
+  Orbit,
 } from "lucide-react";
 
-export type SectionId = "introduction" | "levels";
+export type SectionId = "introduction" | "levels" | "maths";
 
 export type Page = {
   path: string;
@@ -23,7 +30,16 @@ export type Page = {
  * Reading order for the site. Routes, the sidebar, the landing menu,
  * and the previous/next links are all derived from this list.
  * To add a lesson: append a row here and register its component in App.tsx.
+ *
+ * Introduction flows into the levels. Maths is a separate sequence:
+ * previous/next stays inside one group, so the end of the levels still
+ * points at the unwritten Level 3 rather than jumping into the map.
  */
+const readingGroups: readonly (readonly SectionId[])[] = [
+  ["introduction", "levels"],
+  ["maths"],
+];
+
 export const pages = [
   {
     path: "/intro/motivation",
@@ -69,6 +85,55 @@ export const pages = [
     icon: Activity,
     parent: "/level-2",
   },
+  {
+    path: "/maths",
+    section: "maths",
+    label: "The Map",
+    icon: Map,
+  },
+  {
+    path: "/maths/origins",
+    section: "maths",
+    label: "Origins",
+    icon: Milestone,
+  },
+  {
+    path: "/maths/foundations",
+    section: "maths",
+    label: "Foundations",
+    icon: Landmark,
+  },
+  {
+    path: "/maths/structures",
+    section: "maths",
+    label: "Structures",
+    icon: Hexagon,
+  },
+  {
+    path: "/maths/spaces",
+    section: "maths",
+    label: "Spaces",
+    icon: Box,
+  },
+  {
+    path: "/maths/changes",
+    section: "maths",
+    label: "Changes",
+    icon: Orbit,
+  },
+  {
+    path: "/maths/changes/ergodic-theory",
+    section: "maths",
+    label: "Ergodic Theory",
+    icon: InfinityIcon,
+    parent: "/maths/changes",
+  },
+  {
+    path: "/maths/applied",
+    section: "maths",
+    label: "Applied Mathematics",
+    icon: FlaskConical,
+  },
 ] as const satisfies readonly Page[];
 
 export type PagePath = (typeof pages)[number]["path"];
@@ -86,6 +151,12 @@ export const sections = [
     part: "Part II",
     menu: "The Levels",
   },
+  {
+    id: "maths",
+    title: "Part III: Maths",
+    part: "Part III",
+    menu: "Maths",
+  },
 ] as const satisfies readonly {
   id: SectionId;
   title: string;
@@ -96,6 +167,12 @@ export const sections = [
 /** Shown in the sidebar until a real page exists. Not a route. */
 const plannedByParent: Partial<Record<PagePath, readonly string[]>> = {
   "/level-2": ["2.1 The Model"],
+  "/maths/origins": ["Number Systems"],
+  "/maths/foundations": ["Measure Theory"],
+  "/maths/structures": ["Linear Algebra"],
+  "/maths/spaces": ["Topology"],
+  "/maths/changes": ["Dynamical Systems"],
+  "/maths/applied": ["Probability"],
 };
 
 export type SidebarEntry =
@@ -140,10 +217,20 @@ export function neighbors(path: string): {
   prev?: (typeof pages)[number];
   next?: (typeof pages)[number];
 } {
-  const index = pages.findIndex((item) => item.path === path);
+  const current = pages.find((item) => item.path === path);
+  if (!current) return {};
+
+  const group = readingGroups.find((sectionsInGroup) =>
+    sectionsInGroup.some((section) => section === current.section),
+  ) ?? [current.section];
+  const sequence = pages.filter((item) =>
+    group.some((section) => section === item.section),
+  );
+  const index = sequence.findIndex((item) => item.path === path);
   if (index === -1) return {};
+
   return {
-    prev: index > 0 ? pages[index - 1] : undefined,
-    next: index < pages.length - 1 ? pages[index + 1] : undefined,
+    prev: index > 0 ? sequence[index - 1] : undefined,
+    next: index < sequence.length - 1 ? sequence[index + 1] : undefined,
   };
 }

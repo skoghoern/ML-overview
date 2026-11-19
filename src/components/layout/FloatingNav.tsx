@@ -27,9 +27,11 @@ function DropdownItem({
 
 function NavDropdown({
   title,
+  align = "start",
   children,
 }: {
   title: string;
+  align?: "start" | "end";
   children: ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -74,7 +76,12 @@ function NavDropdown({
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-64 max-w-[calc(100vw-2rem)] bg-white/95 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-xl overflow-hidden py-1.5 z-50">
+        <div
+          className={cn(
+            "absolute top-full mt-2 w-64 max-w-[calc(100vw-2rem)] bg-white/95 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-xl overflow-hidden py-1.5 z-50",
+            align === "end" ? "right-0" : "left-0",
+          )}
+        >
           {children}
         </div>
       )}
@@ -88,8 +95,12 @@ export function FloatingNav() {
       <BrandMark className="flex items-center gap-2 pr-4 border-r border-slate-200/60" />
 
       <div className="flex items-center gap-1">
-        {sections.map((section) => (
-          <NavDropdown key={section.id} title={section.menu}>
+        {sections.map((section, index) => (
+          <NavDropdown
+            key={section.id}
+            title={section.menu}
+            align={index === sections.length - 1 ? "end" : "start"}
+          >
             <div className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
               {section.part}
             </div>
